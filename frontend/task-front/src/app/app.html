@@ -1,0 +1,12 @@
+<nav>
+  <span>Task Manager</span>
+  <div>
+    <button (click)="logout()" *ngIf="auth.isAuthenticated()">Cerrar sesión</button>
+  </div>
+</nav>
+
+<div class="message" *ngIf="message" [class.success]="message.type === 'success'" [class.error]="message.type === 'error'">
+  {{ message.text }}
+</div>
+
+<router-outlet></router-outlet>

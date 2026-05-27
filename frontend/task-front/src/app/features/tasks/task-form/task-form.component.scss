@@ -1,0 +1,47 @@
+@use '../../../../styles/variables' as v;
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+
+.modal-content {
+  width: min(540px, 100%);
+  background: v.$color-surface;
+  border-radius: v.$radius-lg;
+  padding: 1.25rem;
+  animation: fade-up 0.25s ease;
+
+  form { display: grid; gap: 0.55rem; }
+
+  input, textarea, select {
+    border: 1px solid v.$color-border;
+    border-radius: v.$radius-sm;
+    padding: 0.65rem;
+    font: inherit;
+    &:focus { @include v.focus-ring(v.$color-secondary); }
+  }
+
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.6rem;
+
+    button {
+      @include v.button-base;
+      &:first-child { background: #e2e8f0; color: v.$color-text; }
+      &:last-child { background: v.$color-primary; color: #fff; }
+    }
+  }
+
+  .error { color: v.$color-error; font-size: 0.8rem; }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

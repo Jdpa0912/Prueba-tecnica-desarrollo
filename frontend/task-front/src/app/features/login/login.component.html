@@ -1,0 +1,21 @@
+<div class="login-container">
+  <h2>Iniciar sesión</h2>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Email</label>
+      <input type="email" formControlName="email">
+      <div class="error" *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+        Email válido requerido
+      </div>
+    </div>
+    <div>
+      <label>Contraseña</label>
+      <input type="password" formControlName="password">
+      <div class="error" *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+        Mínimo 4 caracteres
+      </div>
+    </div>
+    <button type="submit" [disabled]="loading">Ingresar</button>
+  </form>
+  <p>Demo: demo@gmail.com / demo123</p>
+</div>

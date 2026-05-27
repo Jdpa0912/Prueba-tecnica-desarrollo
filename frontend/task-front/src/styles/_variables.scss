@@ -1,0 +1,40 @@
+$color-primary: #2563eb;
+$color-primary-soft: #60a5fa;
+$color-secondary: #14b8a6;
+$color-bg: #f8fafc;
+$color-surface: #ffffff;
+$color-text: #0f172a;
+$color-text-muted: #475569;
+$color-border: #dbe2ea;
+$color-success: #16a34a;
+$color-error: #dc2626;
+$color-warning: #f59e0b;
+
+$radius-sm: 10px;
+$radius-md: 14px;
+$radius-lg: 18px;
+
+$shadow-sm: 0 8px 24px rgba(15, 23, 42, 0.06);
+$shadow-md: 0 16px 36px rgba(15, 23, 42, 0.12);
+
+$bp-sm: 480px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+
+@mixin focus-ring($color: $color-primary) {
+  outline: none;
+  border-color: $color;
+  box-shadow: 0 0 0 3px rgba($color, 0.2);
+}
+
+@mixin button-base {
+  border: 0;
+  border-radius: $radius-sm;
+  padding: 0.65rem 1rem;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.25s ease;
+
+  &:hover { transform: translateY(-1px); }
+}

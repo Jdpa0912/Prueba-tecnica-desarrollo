@@ -1,0 +1,94 @@
+@use '../../../../styles/variables' as v;
+
+.task-page {
+  width: min(1200px, calc(100% - 2rem));
+  margin: 1.2rem auto 2.2rem;
+}
+
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 0 1.2rem;
+
+  button {
+    @include v.button-base;
+    background: v.$color-secondary;
+    color: #fff;
+  }
+}
+
+.task-list {
+  display: grid;
+  gap: 1.1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 380px));
+  justify-content: center;
+  align-items: stretch;
+}
+
+.task-card {
+  background: v.$color-surface;
+  border: 1px solid v.$color-border;
+  border-radius: v.$radius-md;
+  padding: 1rem;
+  box-shadow: v.$shadow-sm;
+  animation: card-in 0.25s ease;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+
+  &:hover { transform: translateY(-3px); box-shadow: v.$shadow-md; }
+
+  &.completed { opacity: 0.7; .task-title span:first-of-type { text-decoration: line-through; } }
+
+  .task-title { display: flex; align-items: center; gap: 0.6rem; }
+
+  p { color: v.$color-text-muted; }
+
+  .priority {
+    margin-left: auto;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    border-radius: 999px;
+    padding: 0.25rem 0.55rem;
+    &.alta { background: #fee2e2; color: #b91c1c; }
+    &.media { background: #ffedd5; color: #c2410c; }
+    &.baja { background: #dcfce7; color: #166534; }
+  }
+
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+    button {
+      @include v.button-base;
+      color: #fff;
+      &:first-child { background: v.$color-primary; }
+      &:last-child { background: v.$color-error; }
+    }
+  }
+}
+
+@media (min-width: v.$bp-md) {
+  .task-page {
+    padding-inline: 0.4rem;
+  }
+}
+
+@media (max-width: #{v.$bp-md - 1px}) {
+  .task-header > button {
+    position: fixed;
+    right: 1rem;
+    bottom: 1rem;
+    z-index: 50;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    padding: 0;
+    font-size: 1.5rem;
+    box-shadow: v.$shadow-md;
+  }
+}
+
+@keyframes card-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
