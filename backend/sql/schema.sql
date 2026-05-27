@@ -5,7 +5,7 @@
 -- Dumped from database version 17.5
 -- Dumped by pg_dump version 17.5
 
--- Started on 2026-05-27 10:55:46
+-- Started on 2026-05-27 11:34:21
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -60,7 +60,7 @@ CREATE SEQUENCE public.tasks_id_seq
 ALTER SEQUENCE public.tasks_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4796 (class 0 OID 0)
+-- TOC entry 4800 (class 0 OID 0)
 -- Dependencies: 219
 -- Name: tasks_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -100,7 +100,7 @@ CREATE SEQUENCE public.users_id_seq
 ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4797 (class 0 OID 0)
+-- TOC entry 4801 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -122,6 +122,43 @@ ALTER TABLE ONLY public.tasks ALTER COLUMN id SET DEFAULT nextval('public.tasks_
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- TOC entry 4794 (class 0 OID 393973)
+-- Dependencies: 220
+-- Data for Name: tasks; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.tasks (id, titulo, descripcion, estado, prioridad, created_at, user_id) VALUES (1, 'Mi primera tarea', 'Esta es una tarea de prueba pero ya editada ', 'pendiente', 'alta', '2026-05-26 13:46:24.409674', 1) ON CONFLICT DO NOTHING;
+INSERT INTO public.tasks (id, titulo, descripcion, estado, prioridad, created_at, user_id) VALUES (4, 'Segunda', 'AAAAAAAAAASFFFFFFFFFFFFFFFFFFFFFFF', 'pendiente', 'baja', '2026-05-27 10:12:35.663986', 1) ON CONFLICT DO NOTHING;
+
+
+--
+-- TOC entry 4792 (class 0 OID 393961)
+-- Dependencies: 218
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO public.users (id, email, password, created_at) VALUES (1, 'demo@gmail.com', '$2b$10$rMyQTkyxIazXwrEWDpKBbuAYcANk1enLw3n31/AXWBDsMvy0Ios96', '2026-05-26 13:46:24.409674') ON CONFLICT DO NOTHING;
+
+
+--
+-- TOC entry 4802 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: tasks_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.tasks_id_seq', 4, true);
+
+
+--
+-- TOC entry 4803 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.users_id_seq', 1, true);
 
 
 --
@@ -176,7 +213,7 @@ ALTER TABLE ONLY public.tasks
     ADD CONSTRAINT tasks_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(id) ON DELETE CASCADE;
 
 
--- Completed on 2026-05-27 10:55:46
+-- Completed on 2026-05-27 11:34:21
 
 --
 -- PostgreSQL database dump complete
