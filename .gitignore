@@ -17,4 +17,3 @@ logs/
 
 # Dependencias
 node_modules/
-"@ | Out-File -FilePath .gitignore -Encoding utf8
