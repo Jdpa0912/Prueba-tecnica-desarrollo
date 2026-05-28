@@ -1,8 +1,16 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+
+interface LoginResponse {
+  success: boolean;
+  data: {
+    token: string;
+    user: User;
+  };
+}
 
 interface User {
   id: number;
@@ -11,15 +19,15 @@ interface User {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  private http = inject(HttpClient);
+  private platformId = inject(PLATFORM_ID);
+
   private apiUrl = environment.apiUrl;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
   private readonly isBrowser: boolean;
 
-  constructor(
-    private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: object
-  ) {
+  constructor() {
     this.isBrowser = isPlatformBrowser(this.platformId);
 
     if (this.isBrowser) {
@@ -36,17 +44,17 @@ export class AuthService {
     }
   }
 
-  login(email: string, password: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}/auth/login`, { email, password }).pipe(
-      tap((res: any) => {
-        if (res.success && this.isBrowser) {
-          localStorage.setItem('token', res.data.token);
-          localStorage.setItem('user', JSON.stringify(res.data.user));
-          this.currentUserSubject.next(res.data.user);
-        }
-      })
-    );
-  }
+ login(email: string, password: string): Observable<LoginResponse> {     
+  return this.http.post<LoginResponse>(`${this.apiUrl}/auth/login`, { email, password }).pipe(
+    tap((res: LoginResponse) => {                                       
+      if (res.success && this.isBrowser) {
+        localStorage.setItem('token', res.data.token);
+        localStorage.setItem('user', JSON.stringify(res.data.user));
+        this.currentUserSubject.next(res.data.user);
+      }
+    })
+  );
+}
 
   logout(): void {
     if (this.isBrowser) {

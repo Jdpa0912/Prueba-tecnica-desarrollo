@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { Router, UrlTree } from '@angular/router';
 import { AuthGuard } from './auth-guard';
 import { AuthService } from '../services/auth/auth.service';
 
@@ -31,7 +31,7 @@ describe('AuthGuard', () => {
   });
 
   it('should create url tree when not authenticated', () => {
-    const tree = {} as any;
+    const tree = {} as UrlTree;
     authServiceSpy.isAuthenticated.and.returnValue(false);
     routerSpy.parseUrl.and.returnValue(tree);
 

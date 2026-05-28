@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
@@ -15,9 +15,9 @@ export interface Task {
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private apiUrl = environment.apiUrl;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = environment.apiUrl;
 
   getTasks(): Observable<{ success: boolean; data: Task[] }> {
     return this.http.get<{ success: boolean; data: Task[] }>(`${this.apiUrl}/tasks`);

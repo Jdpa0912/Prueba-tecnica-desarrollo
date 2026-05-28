@@ -4,20 +4,24 @@
     <button (click)="showForm = true; editingTask = null">+ Nueva tarea</button>
   </div>
 
-  <app-task-form *ngIf="showForm" [task]="editingTask" (close)="onFormClose($event)"></app-task-form>
+  @if (showForm) {
+    <app-task-form [task]="editingTask" (formClose)="onFormClose($event)"></app-task-form>
+  }
 
   <div class="task-list">
-    <div *ngFor="let task of tasks" class="task-card" [class.completed]="task.estado === 'completada'">
-      <div class="task-title">
-        <input type="checkbox" [checked]="task.estado === 'completada'" (change)="toggleComplete(task)">
-        <span>{{ task.titulo }}</span>
-        <span class="priority {{ task.prioridad }}">{{ task.prioridad }}</span>
+    @for (task of tasks; track task) {
+      <div class="task-card" [class.completed]="task.estado === 'completada'">
+        <div class="task-title">
+          <input type="checkbox" [checked]="task.estado === 'completada'" (change)="toggleComplete(task)">
+          <span>{{ task.titulo }}</span>
+          <span class="priority {{ task.prioridad }}">{{ task.prioridad }}</span>
+        </div>
+        <p>{{ task.descripcion }}</p>
+        <div class="actions">
+          <button (click)="editTask(task)">Editar</button>
+          <button (click)="deleteTask(task.id)">Eliminar</button>
+        </div>
       </div>
-      <p>{{ task.descripcion }}</p>
-      <div class="actions">
-        <button (click)="editTask(task)">Editar</button>
-        <button (click)="deleteTask(task.id)">Eliminar</button>
-      </div>
-    </div>
+    }
   </div>
 </section>

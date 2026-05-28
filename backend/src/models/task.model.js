@@ -54,9 +54,23 @@ const deleteTask = async (taskId, userId) => {
   return result.rows.length > 0;
 };
 
+const softDeleteTask = async (taskId, userId) => {
+  const result = await pool.query(
+    `UPDATE tasks
+     SET deleted_at = NOW()
+     WHERE id = $1
+       AND user_id = $2
+       AND deleted_at IS NULL
+     RETURNING id`,
+    [taskId, userId]
+  );
+  return result.rows.length > 0;
+};
+
 module.exports = {
   createTask,
   getTasksByUser,
   updateTask,
   deleteTask,
+  softDeleteTask
 };

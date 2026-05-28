@@ -2,17 +2,19 @@
   <div class="modal-content">
     <h3>{{ task ? 'Editar tarea' : 'Nueva tarea' }}</h3>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
-      <label>Título *</label>
-      <input formControlName="titulo">
-      <div class="error" *ngIf="taskForm.get('titulo')?.invalid && taskForm.get('titulo')?.touched">
-        Mínimo 3 caracteres
-      </div>
+      <label for="titulo">Título *</label>
+      <input id="titulo" formControlName="titulo">
+      @if (taskForm.get('titulo')?.invalid && taskForm.get('titulo')?.touched) {
+        <div class="error">
+          Mínimo 3 caracteres
+        </div>
+      }
 
-      <label>Descripción</label>
-      <textarea formControlName="descripcion"></textarea>
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" formControlName="descripcion"></textarea>
 
-      <label>Prioridad</label>
-      <select formControlName="prioridad">
+      <label for="prioridad">Prioridad</label>
+      <select id="prioridad" formControlName="prioridad">
         <option value="alta">Alta</option>
         <option value="media">Media</option>
         <option value="baja">Baja</option>

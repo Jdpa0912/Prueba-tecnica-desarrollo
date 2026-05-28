@@ -1,27 +1,27 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { FormBuilder, Validators, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+
 import { TaskService, Task } from '../../../core/services/task/task.service';
 import { MessageService } from '../../../core/services/message/message.service';
 
 @Component({
   selector: 'app-task-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './task-form.component.html',
   styleUrls: ['./task-form.component.scss']
 })
 export class TaskFormComponent implements OnInit {
+  private fb = inject(FormBuilder);
+  private taskService = inject(TaskService);
+  private msgService = inject(MessageService);
+
   @Input() task: Task | null = null;
-  @Output() close = new EventEmitter<boolean>();
+  @Output() formClose = new EventEmitter<boolean>(); 
 
   taskForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private taskService: TaskService,
-    private msgService: MessageService
-  ) {
+  constructor() {
     this.taskForm = this.fb.group({
       titulo: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]],
       descripcion: [''],
@@ -48,7 +48,7 @@ export class TaskFormComponent implements OnInit {
       this.taskService.updateTask(this.task.id, data).subscribe({
         next: () => {
           this.msgService.showSuccess('Tarea actualizada');
-          this.close.emit(true);
+          this.formClose.emit(true);
         },
         error: () => this.msgService.showError('Error al actualizar')
       });
@@ -56,7 +56,7 @@ export class TaskFormComponent implements OnInit {
       this.taskService.createTask(data).subscribe({
         next: () => {
           this.msgService.showSuccess('Tarea creada');
-          this.close.emit(true);
+          this.formClose.emit(true);
         },
         error: () => this.msgService.showError('Error al crear')
       });
@@ -64,6 +64,6 @@ export class TaskFormComponent implements OnInit {
   }
 
   cancel() {
-    this.close.emit(false);
+    this.formClose.emit(false);
   }
 }

@@ -38,4 +38,14 @@ const remove = async (req, res, next) => {
   }
 };
 
-module.exports = { create, list, update, remove };
+const softDelete = async (req, res, next) => {
+  try {
+    const deleted = await taskService.softDeleteTask(req.params.id, req.user.userId);
+    if (!deleted) return res.status(404).json({ success: false, message: 'Task not found' });
+    res.json({ success: true, message: 'Task marked as deleted' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { create, list, update, remove, softDelete };

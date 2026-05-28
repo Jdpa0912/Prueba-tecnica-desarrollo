@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+
 import { TaskService, Task } from '../../../core/services/task/task.service';
 import { MessageService } from '../../../core/services/message/message.service';
 import { TaskFormComponent } from '../task-form/task-form.component';
@@ -7,16 +7,17 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 @Component({
   selector: 'app-task-list',
   standalone: true,
-  imports: [CommonModule, TaskFormComponent],
+  imports: [TaskFormComponent],
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss']
 })
 export class TaskListComponent implements OnInit {
+  private taskService = inject(TaskService);
+  private msg = inject(MessageService);
+
   tasks: Task[] = [];
   editingTask: Task | null = null;
   showForm = false;
-
-  constructor(private taskService: TaskService, private msg: MessageService) {}
 
   ngOnInit() {
     this.loadTasks();

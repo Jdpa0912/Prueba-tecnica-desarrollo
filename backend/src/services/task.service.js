@@ -4,5 +4,6 @@ const createTask = (userId, payload) => taskModel.createTask(userId, payload);
 const getTasksByUser = (userId) => taskModel.getTasksByUser(userId);
 const updateTask = (taskId, userId, updates) => taskModel.updateTask(taskId, userId, updates);
 const deleteTask = (taskId, userId) => taskModel.deleteTask(taskId, userId);
+const softDeleteTask = (taskId, userId) => taskModel.softDeleteTask(taskId, userId);
 
-module.exports = { createTask, getTasksByUser, updateTask, deleteTask };
+module.exports = { createTask, getTasksByUser, updateTask, deleteTask, softDeleteTask };
