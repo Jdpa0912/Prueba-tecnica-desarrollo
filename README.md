@@ -34,6 +34,7 @@ SSR (Server Side Rendering) configurado pero no utilizado activamente; se dejó 
 
 Paginación y filtros (por estado, prioridad) en el listado de tareas.
 Mejor manejo de sesión expirada (redirección automática al login).
+Completar el Soft delete
 
 ---
 
